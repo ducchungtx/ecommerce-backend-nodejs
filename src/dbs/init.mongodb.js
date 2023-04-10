@@ -1,9 +1,12 @@
 'use strict';
 
 const mongoose = require('mongoose');
+const {
+  db: { info },
+} = require('../configs/config.mongodb');
 
 // pass luu trong sticky note
-const connectString = `mongodb+srv://shop-dev:123@cluster0.8rown.mongodb.net/shop-dev?retryWrites=true&w=majority`;
+const connectString = info;
 
 class Database {
   constructor() {
