@@ -3,6 +3,7 @@
 ### signup
 POST {{url_dev}}/shop/signup
 Content-Type: application/json
+x-api-key: bd537eb854b3c240bd217aaf75fd0a8e18cb0e5c12e77aa02eba674b98a1aeb8b5e2213b8e0ebb67850171cba3627cd258b9b9805a977aa885015e2cf4fe16b5
 
 {
   "name": "Shop Chung",
