@@ -11,7 +11,7 @@ const apiKey = async (req, res, next) => {
   try {
     const key = req.headers[HEADER.API_KEY]?.toString();
     if (!key) {
-      return res.status(400).json({
+      return res.status(403).json({
         message: 'Forbidden ERROR',
       });
     }
@@ -45,14 +45,7 @@ const permission = (permission) => {
   };
 };
 
-const asyncHandler = (fn) => {
-  return (req, res, next) => {
-    fn(req, res, next).catch(next);
-  };
-};
-
 module.exports = {
   apiKey,
   permission,
-  asyncHandler,
 };
