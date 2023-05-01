@@ -23,6 +23,50 @@ const RoleShop = {
 
 class AccessService {
   /**
+   * Check xu ly token
+   *
+   * @static
+   * @param {*} { refreshToken, user, keyStore }
+   * @memberof AccessService
+   */
+  static handlerRefreshTokenV2 = async ({ refreshToken, user, keyStore }) => {
+    const { userId, email } = user;
+
+    if (keyStore.refreshTokensUsed.includes(refreshToken)) {
+      await KeyTokenService.deleteByKeyId(userId);
+      throw new ForbiddenError('Something wrong happened!! Please relogin');
+    }
+
+    if (keyStore.refreshToken !== refreshToken)
+      throw new AuthFailureError('Shop was not registed');
+
+    const foundShop = await findByEmail({ email });
+    if (!foundShop) throw new AuthFailureError('Shop was not registed');
+
+    // cap token moi
+    const tokens = await createTokenPair(
+      { userId, email },
+      keyStore.publicKey,
+      keyStore.privateKey
+    );
+
+    // update token
+    await keyStore.updateOne({
+      $set: {
+        refreshToken: tokens.refreshToken,
+      },
+      $addToSet: {
+        refreshTokensUsed: refreshToken, // da duoc su dung de lay token moi roi
+      },
+    });
+
+    return {
+      user,
+      tokens,
+    };
+  };
+
+  /**
    * check this toke used - check hack
    * @param {*} refreshToken
    */
