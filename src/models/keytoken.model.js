@@ -1,29 +1,26 @@
-'use strict';
+const { Schema, mongoose } = require('mongoose');
 
 const DOCUMENT_NAME = 'Key';
 const COLLECTION_NAME = 'Keys';
 
-const { Schema, model } = require('mongoose'); // Erase if already required
-
-// Declare the Schema of the Mongo model
-var keyTokenSchema = new Schema(
+const keyTokenSchema = new mongoose.Schema(
   {
     user: {
       type: Schema.Types.ObjectId,
-      required: true,
+      trim: true,
       ref: 'Shop',
-    },
-    privateKey: {
-      type: String,
-      required: true,
     },
     publicKey: {
       type: String,
-      required: true,
+      trim: true,
+    },
+    privateKey: {
+      type: String,
+      trim: true,
     },
     refreshTokensUsed: {
       type: Array,
-      default: [], // những refreshToken đã được sử dụng
+      default: [],
     },
     refreshToken: {
       type: String,
@@ -36,5 +33,4 @@ var keyTokenSchema = new Schema(
   }
 );
 
-//Export the model
-module.exports = model(DOCUMENT_NAME, keyTokenSchema);
+module.exports = mongoose.model(DOCUMENT_NAME, keyTokenSchema);

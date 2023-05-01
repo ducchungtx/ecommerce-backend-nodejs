@@ -1,6 +1,6 @@
 'use strict';
 
-const keytokenModel = require('../models/keytoken.model');
+const keyTokenModel = require('../models/keytoken.model');
 const { Types } = require('mongoose');
 
 class KeyTokenService {
@@ -11,26 +11,26 @@ class KeyTokenService {
     refreshToken,
   }) => {
     try {
+      // console.log('userId', userId);
       // lv 0
-      // const tokens = await keytokenModel.create({
+      // const tokens = await keyTokenModel.create({
       //   user: userId,
       //   publicKey: publicKey,
       //   privateKey: privateKey,
       // });
+      // console.log('tokens', tokens);
       // return tokens ? tokens.publicKey : null;
 
       // level xxx
-      const filter = {
-        user: userId,
-        update: {
+      const filter = { user: userId },
+        update = {
           publicKey,
           privateKey,
           refreshTokensUsed: [],
           refreshToken,
         },
-        options: { upsert: true, new: true },
-      };
-      const tokens = await keytokenModel.findOneAndUpdate(
+        options = { upsert: true, new: true };
+      const tokens = await keyTokenModel.findOneAndUpdate(
         filter,
         update,
         options
@@ -42,11 +42,13 @@ class KeyTokenService {
   };
 
   static findByUserId = async (userId) => {
-    return await keytokenModel.findOne({ user: Types.ObjectId(userId) }).lean();
+    return await keyTokenModel
+      .findOne({ user: new Types.ObjectId(userId) })
+      .lean();
   };
 
   static removeKeyById = async (id) => {
-    return await keytokenModel.findOneAndRemove(Types.ObjectId(id));
+    return await keyTokenModel.findOneAndRemove(new Types.ObjectId(id));
   };
 
   /**
@@ -57,7 +59,7 @@ class KeyTokenService {
    * @memberof AccessService
    */
   static findByRefreshTokenUsed = async (refreshToken) => {
-    return await keytokenModel
+    return await keyTokenModel
       .findOne({ refreshTokensUsed: refreshToken })
       .lean();
   };
@@ -70,7 +72,7 @@ class KeyTokenService {
    * @memberof KeyTokenService
    */
   static findByRefreshToken = async (refreshToken) => {
-    return await keytokenModel.findOne({ refreshToken });
+    return await keyTokenModel.findOne({ refreshToken });
   };
 
   /**
@@ -81,7 +83,10 @@ class KeyTokenService {
    * @memberof AccessService
    */
   static deleteByKeyId = async (userId) => {
-    return await keytokenModel.findByIdAndDelete({ userId }).lean();
+    console.log('delete', new Types.ObjectId(userId));
+    return await keyTokenModel.findByIdAndDelete({
+      userId: new Types.ObjectId(userId),
+    });
   };
 }
 

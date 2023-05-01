@@ -4,7 +4,6 @@ const JWT = require('jsonwebtoken');
 const asyncHandler = require('../helpers/asyncHandler');
 const { AuthFailureError, NotFoundError } = require('../core/error.response');
 const { findByUserId } = require('../services/keyToken.service');
-const keytokenModel = require('../models/keytoken.model');
 
 const HEADER = {
   API_KEY: 'x-api-key',
@@ -60,7 +59,8 @@ const authentication = asyncHandler(async (req, res, next) => {
   if (!accessToken) throw new AuthFailureError('Invalid request');
 
   try {
-    const decodeUser = JWT.verify(accessToken, keyStore.publicKey);
+    const decodeUser = await verifyJWT(accessToken, keyStore.publicKey);
+
     if (userId !== decodeUser.userId)
       throw new AuthFailureError('Invalid userId');
     req.keyStore = keyStore;

@@ -13,7 +13,6 @@ const {
   ForbiddenError,
 } = require('../core/error.response');
 const { findByEmail } = require('./shop.service');
-const keytokenModel = require('../models/keytoken.model');
 
 const RoleShop = {
   SHOP: 'SHOP',
@@ -29,7 +28,9 @@ class AccessService {
    */
   static handlerRefreshToken = async (refreshToken) => {
     // check xem token nay da duoc su dung chua?
-    const foundToken = KeyTokenService.findByRefreshTokenUsed(refreshToken);
+    const foundToken = await KeyTokenService.findByRefreshTokenUsed(
+      refreshToken
+    );
     // neu co
     if (foundToken) {
       // decode xem la ai
@@ -40,7 +41,7 @@ class AccessService {
       console.log({ userId, email });
       // xóa tat ca token trong keyStore
       await KeyTokenService.deleteByKeyId(userId);
-      throw new ForbiddenError('Something wrong happened !!');
+      throw new ForbiddenError('Something wrong happened!!');
     }
 
     // không tìm thấy
@@ -50,12 +51,11 @@ class AccessService {
     // verify token
     const { userId, email } = await verifyJWT(
       refreshToken,
-      foundToken.privateKey
+      holderToken.privateKey
     );
     // check userId
     const foundShop = await findByEmail({ email });
     if (!foundShop) throw new AuthFailureError('Shop was not registed');
-
     // cap token moi
     const tokens = await createTokenPair(
       { userId, email },
@@ -116,10 +116,11 @@ class AccessService {
     // created token pair
     const { _id: userId } = foundShop;
     const tokens = await createTokenPair(
-      { userId, email },
+      { userId: userId.toString(), email },
       publicKey,
       privateKey
     );
+
     await KeyTokenService.createKeyToken({
       userId,
       refreshToken: tokens.refreshToken,
