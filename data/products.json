@@ -21,9 +21,22 @@
     "product_thumb": "product_thumb",
     "product_quantity": 5,
     "product_attributes": {
-      "manufacturer": "Levis",
+      "manufacturer": "Apple",
       "model": "iPhone 14",
       "color": "Gold"
+    }
+  },
+  {
+    "product_name": "Furniture Examlple",
+    "product_description": "Furniture desc",
+    "product_price": 500,
+    "product_type": "Furniture",
+    "product_thumb": "product_thumb2",
+    "product_quantity": 23,
+    "product_attributes": {
+      "brand": "Furniture A",
+      "size": 15,
+      "material": "Gold"
     }
   }
 ]
