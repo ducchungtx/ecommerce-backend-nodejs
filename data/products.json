@@ -1,0 +1,14 @@
+{
+  "product_name": "New Jeans",
+  "product_description": "High-quality denim jeans",
+  "product_price": 50,
+  "product_shop": "6447dadd0494c46e30d9f558",
+  "product_type": "Clothing",
+  "product_thumb": "product_thumb",
+  "product_quantity": 5,
+  "product_attributes": {
+    "brand": "Levis",
+    "size": "L",
+    "material": "Denim"
+  }
+}

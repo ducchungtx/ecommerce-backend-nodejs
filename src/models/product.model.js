@@ -5,7 +5,7 @@ const DOCUMENT_NAME = 'Product';
 const COLLECTION_NAME = 'Products';
 
 // Declare the Schema of the Mongo model
-var userSchema = new mongoose.Schema(
+var productSchema = new Schema(
   {
     product_name: {
       type: String,
@@ -24,7 +24,7 @@ var userSchema = new mongoose.Schema(
       type: Number,
       required: true,
     },
-    product_quality: {
+    product_quantity: {
       type: Number,
       required: true,
     },
