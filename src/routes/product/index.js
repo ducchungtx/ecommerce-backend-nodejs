@@ -10,11 +10,12 @@ router.get(
   '/search/:keySearch',
   asyncHandler(productController.getListSearchProduct)
 );
+router.get('', asyncHandler(productController.findAllProducts));
+router.get('/:product_id', asyncHandler(productController.findProduct));
 
 // authentication
 router.use(authenticationV2);
 // product
-router.get('', asyncHandler(productController.products));
 router.post('', asyncHandler(productController.createProduct));
 router.post(
   '/publish/:id',

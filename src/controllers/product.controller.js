@@ -43,12 +43,6 @@ class ProductController {
     }).send(res);
   };
 
-  products = async (req, res, next) => {
-    return res.json({
-      message: 'Products',
-    });
-  };
-
   /**
    * Get all drafts
    *
@@ -87,6 +81,22 @@ class ProductController {
     new SuccessResponse({
       message: 'Get list getListSearchProduct successfully!',
       metadata: await ProductFactoryV2.getListSearchProduct(req.params),
+    }).send(res);
+  };
+
+  findAllProducts = async (req, res, next) => {
+    new SuccessResponse({
+      message: 'Get list findAllProducts successfully!',
+      metadata: await ProductFactoryV2.findAllProducts(req.query),
+    }).send(res);
+  };
+
+  findProduct = async (req, res, next) => {
+    new SuccessResponse({
+      message: 'Get findProduct successfully!',
+      metadata: await ProductFactoryV2.findProduct({
+        product_id: req.params.product_id,
+      }),
     }).send(res);
   };
   // END QUERY

@@ -1,5 +1,6 @@
 'use strict';
 
+const { getSelectData, getUnSelectData } = require('../../utils');
 const {
   product,
   electronic,
@@ -28,19 +29,24 @@ const queryProduct = async ({ query, limit, skip }) => {
     .exec();
 };
 
-const searchProductsByUser = async ({ keySearch }) => {
-  const regexSearch = new RegExp(keySearch);
-  const results = await product
-    .find(
-      {
-        isPublished: true,
-        $text: { $search: regexSearch },
-      },
-      { score: { $meta: 'textScore' } }
-    )
-    .sort({ score: { $meta: 'textScore' } })
+const findAllProducts = async ({ limit, sort, page, filter, select }) => {
+  const skip = (page - 1) * limit;
+  const sortBy = sort === 'ctime' ? { _id: -1 } : { _id: 1 };
+  const products = await product
+    .find(filter)
+    .sort(sortBy)
+    .skip(skip)
+    .limit(limit)
+    .select(getSelectData(select))
     .lean();
-  return results;
+  return products;
+};
+
+const findProduct = async ({ product_id, unSelect }) => {
+  return await product
+    .findById(product_id)
+    .select(getUnSelectData(unSelect))
+    .lean();
 };
 
 const publishProductByShop = async ({ product_shop, product_id }) => {
@@ -69,10 +75,27 @@ const unPublishProductByShop = async ({ product_shop, product_id }) => {
   return modifiedCount;
 };
 
+const searchProductsByUser = async ({ keySearch }) => {
+  const regexSearch = new RegExp(keySearch);
+  const results = await product
+    .find(
+      {
+        isPublished: true,
+        $text: { $search: regexSearch },
+      },
+      { score: { $meta: 'textScore' } }
+    )
+    .sort({ score: { $meta: 'textScore' } })
+    .lean();
+  return results;
+};
+
 module.exports = {
   findAllDraftsForShop,
   publishProductByShop,
   unPublishProductByShop,
   findAllPublishForShop,
   searchProductsByUser,
+  findAllProducts,
+  findProduct,
 };
