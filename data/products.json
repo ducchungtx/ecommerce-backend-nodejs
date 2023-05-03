@@ -38,5 +38,18 @@
       "size": 15,
       "material": "Gold"
     }
+  },
+  {
+    "product_name": "Áo sơ mi nam trơn tay dài cao cấp Lados - 779 chất kate lụa mềm mát, thấm hút mồ hôi",
+    "product_description": "Thiết kế theo form rộng vừa,đơn giản , dễ mặc ..Tôn lên được sự trẻ trung năng động cho các bạn nam, kèm vào đó là sự hoạt động thoải mái khi mặc sản phẩm",
+    "product_price": 139.0,
+    "product_type": "Clothing",
+    "product_thumb": "https://salt.tikicdn.com/cache/750x750/ts/product/84/08/78/949e497e5d112c8bd220493b12906377.jpg.webp",
+    "product_quantity": 23,
+    "product_attributes": {
+      "brand": "LADOS",
+      "size": "XL",
+      "material": "Kate"
+    }
   }
 ]

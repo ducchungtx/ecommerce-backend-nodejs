@@ -1,5 +1,6 @@
 'use strict';
 const { model, Schema } = require('mongoose'); // Erase if already required
+const slugify = require('slugify');
 
 const DOCUMENT_NAME = 'Product';
 const COLLECTION_NAME = 'Products';
@@ -20,6 +21,7 @@ var productSchema = new Schema(
     product_description: {
       type: String,
     },
+    product_slug: String,
     product_price: {
       type: Number,
       required: true,
@@ -41,12 +43,44 @@ var productSchema = new Schema(
       type: Schema.Types.Mixed,
       required: true,
     },
+    product_ratingsAverage: {
+      type: Number,
+      default: 4.5,
+      min: [1, 'Rating must be above 1.0'],
+      max: [5, 'Rating must be above 5.0'],
+      // 4.3456666 => 4.4
+      set: (val) => Math.round(val * 10) / 10,
+    },
+    product_variations: {
+      type: Array,
+      default: [],
+    },
+    isDraft: {
+      type: Boolean,
+      default: true,
+      index: true,
+      select: false, // khong hien thi khi select
+    },
+    isPublished: {
+      type: Boolean,
+      default: false,
+      index: true,
+      select: false, // khong hien thi khi select
+    },
   },
   {
     timestamps: true,
     collection: COLLECTION_NAME,
   }
 );
+
+// create index for search
+productSchema.index({ product_name: 'text', product_description: 'text' });
+// Document  middleware: runs before  save() and create()
+productSchema.pre('save', function (next) {
+  this.product_slug = slugify(this.product_name, { lower: true });
+  next();
+});
 
 const electronicsSchema = new Schema(
   {
