@@ -1,0 +1,40 @@
+[
+  {
+    "name": "name fixed amount",
+    "description": "description",
+    "type": "percentage",
+    "value": 30000,
+    "max_value": 30000,
+    "code": "SHOP-1122",
+    "start_date": "2023-05-15 09:00:00",
+    "end_date": "2023-05-30 09:00:00",
+    "max_uses": 100,
+    "uses_count": 0,
+    "users_used": [],
+    "max_uses_per_user": 1,
+    "min_order_value": 200000,
+    "created_by": {},
+    "is_active": true,
+    "applies_to": "specific",
+    "product_ids": ["6451d928f13f4e021d7b0512", "645517a9c77f41c849eec366"]
+  },
+  {
+    "name": "name percentage",
+    "description": "description",
+    "type": "percentage",
+    "value": 10,
+    "max_value": 30000,
+    "code": "SHOP-1133",
+    "start_date": "2023-05-15 09:00:00",
+    "end_date": "2023-05-30 09:00:00",
+    "max_uses": 100,
+    "uses_count": 0,
+    "users_used": [],
+    "max_uses_per_user": 1,
+    "min_order_value": 200000,
+    "created_by": {},
+    "is_active": true,
+    "applies_to": "all",
+    "product_ids": ["6451d928f13f4e021d7b0512", "645517a9c77f41c849eec366"]
+  }
+]

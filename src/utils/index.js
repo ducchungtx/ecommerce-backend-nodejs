@@ -1,6 +1,7 @@
 'use strict';
 
 const _ = require('lodash');
+const { Types } = require('mongoose');
 
 const getInfoData = ({ fields = [], object = {} }) => {
   return _.pick(object, fields);
@@ -14,6 +15,10 @@ const getSelectData = (select = []) => {
 // ['a', 'b'] => { a: 0, b: 0 }
 const getUnSelectData = (unSelect = []) => {
   return Object.fromEntries(unSelect.map((el) => [el, 0]));
+};
+
+const convert2ObjectId = (id) => {
+  return new Types.ObjectId(id);
 };
 
 const removeUndefinedObject = (obj) => {
@@ -47,4 +52,5 @@ module.exports = {
   getUnSelectData,
   removeUndefinedObject,
   updateNestedObjectParser,
+  convert2ObjectId,
 };
