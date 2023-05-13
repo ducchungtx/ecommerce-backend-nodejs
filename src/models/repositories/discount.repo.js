@@ -1,6 +1,6 @@
 'use strict';
 
-const { unGetSelectData, getSelectData } = require('../../utils');
+const { getUnSelectData, getSelectData } = require('../../utils');
 
 const findAllDiscountCodesUnSelect = async ({
   limit = 50,
@@ -17,7 +17,7 @@ const findAllDiscountCodesUnSelect = async ({
     .sort(sortBy)
     .skip(skip)
     .limit(limit)
-    .select(unGetSelectData(unSelect))
+    .select(getUnSelectData(unSelect))
     .lean();
 };
 
@@ -31,6 +31,7 @@ const findAllDiscountCodesSelect = async ({
 }) => {
   const skip = (page - 1) * limit;
   const sortBy = sort === 'ctime' ? { _id: -1 } : { _id: 1 };
+  console.log('sortBy', sortBy);
   return await model
     .find(filter)
     .sort(sortBy)
@@ -40,7 +41,7 @@ const findAllDiscountCodesSelect = async ({
     .lean();
 };
 
-const checkDiscountExists = async (model, filter) => {
+const checkDiscountExists = async ({ model, filter }) => {
   return await model.findOne(filter).lean();
 };
 

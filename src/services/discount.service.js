@@ -6,6 +6,7 @@ const { findAllProducts } = require('../models/repositories/product.repo');
 const {
   findAllDiscountCodesUnSelect,
   checkDiscountExists,
+  findAllDiscountCodesSelect,
 } = require('../models/repositories/discount.repo');
 const { convert2ObjectId } = require('../utils');
 
@@ -117,6 +118,8 @@ class DiscountService {
       })
       .lean();
 
+    console.log('foundDiscount', foundDiscount);
+
     if (!foundDiscount || !foundDiscount.discount_is_active) {
       throw new NotFoundError('Discount not exists');
     }
@@ -149,14 +152,14 @@ class DiscountService {
   }
 
   static async getAllDiscountCodesByShop({ limit, page, shopId }) {
-    return await findAllDiscountCodesUnSelect({
+    return await findAllDiscountCodesSelect({
       limit: +limit,
       page: +page,
       filter: {
-        discount_shopId: convert2ObjectId(shopId),
+        discount_shop_id: convert2ObjectId(shopId),
         discount_is_active: true,
       },
-      unSelect: ['__v', 'discount_shopId'],
+      select: ['discount_code', 'discount_name'],
       model: discountModel,
     });
   }
@@ -165,8 +168,8 @@ class DiscountService {
     const foundDiscount = await checkDiscountExists({
       model: discountModel,
       filter: {
-        discount_code: code,
-        discount_shopId: convert2ObjectId(shopId),
+        discount_code: codeId,
+        discount_shop_id: convert2ObjectId(shopId),
       },
     });
 

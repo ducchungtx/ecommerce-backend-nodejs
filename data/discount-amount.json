@@ -1,0 +1,12 @@
+{
+  "codeId": "SHOP-1122",
+  "userId": 2,
+  "shopId": "6447dadd0494c46e30d9f558",
+  "products": [
+    {
+      "productId": "",
+      "quantity": 5,
+      "price": 120000
+    }
+  ]
+}

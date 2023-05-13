@@ -28,8 +28,7 @@ class DiscountController {
     new SuccessResponse({
       message: 'Get Discount Code success',
       metadata: await DiscountService.getAllDiscountCodeWithProduct({
-        ...req.body,
-        shopId: req.user.userId,
+        ...req.query,
       }),
     }).send(res);
   };
@@ -39,7 +38,6 @@ class DiscountController {
       message: 'Get all discount codes success',
       metadata: await DiscountService.getAllDiscountCodesByShop({
         ...req.query,
-        shopId: req.user.userId,
       }),
     }).send(res);
   };
@@ -49,7 +47,7 @@ class DiscountController {
       message: 'Get discount amount success',
       metadata: await DiscountService.getDiscountAmount({
         ...req.body,
-        shopId: req.user.userId,
+        // shopId: req.user.userId,
       }),
     }).send(res);
   };
