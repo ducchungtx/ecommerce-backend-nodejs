@@ -1,0 +1,30 @@
+[
+  {
+    "userId": 1001,
+    "product": {
+      "productId": "645517a9c77f41c849eec366",
+      "shopId": "6447dadd0494c46e30d9f558",
+      "quantity": 2,
+      "name": "",
+      "price": 149
+    }
+  },
+
+  {
+    "userId": 1001,
+    "shop_order_ids": [
+      {
+        "shopId": "6447dadd0494c46e30d9f558",
+        "item_products": [
+          {
+            "quantity": 1,
+            "price": 149,
+            "shopId": "6447dadd0494c46e30d9f558",
+            "old_quantity": 2,
+            "productId": "645517a9c77f41c849eec366"
+          }
+        ]
+      }
+    ]
+  }
+]
